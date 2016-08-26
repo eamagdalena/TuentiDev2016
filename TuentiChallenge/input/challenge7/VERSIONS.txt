@@ -1,0 +1,26 @@
+ /* Converts a list into all the possible sums on it */
+  def convertRowToSums(row : List[Int], N : Int) : List[Int] = {
+    val START : List[Int] = Nil
+
+		/* This was originally a beautiful immutable foldLeft :'( */
+		var n = 0 /* SORRY FP ! */
+		val listBuffer : ListBuffer [Int] = new ListBuffer[Int]()
+
+		//Version 2.5
+    row.foldRight(START){
+      (cell : Int, res : List[Int]) => {
+        val newSums = listBuffer.take(n).map((cell2: Int) => cell2 + cell )
+
+				n = if (n != N ) n + 1 else N
+
+				listBuffer.prependAll(newSums)
+				listBuffer.prepend(cell)
+
+//        cell :: (newSums ++ res)
+				res
+      }
+    }
+
+		listBuffer.toList
+
+  }
